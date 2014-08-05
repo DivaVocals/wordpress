@@ -202,13 +202,27 @@ class Facebook_WP_Extend extends WP_Facebook {
 			return array();
 
 		$response = self::graph_api_with_app_access_token( $facebook_id . '/permissions', 'GET' );
+		// JP - line added to debug
+		//echo "\$response: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($response, TRUE))))."\n<br />\n";
 
 		if ( is_array( $response ) && isset( $response['data'][0] ) ) {
-			$response = $response['data'][0];
+			//$response = $response['data'][0];
+			// JP - changed array 
+			$response = $response['data'];
 			$permissions = array();
-			foreach( $response as $permission => $exists ) {
-				$permissions[$permission] = true;
+			// foreach( $response as $permission => $exists ) {
+			// 	$permissions[$permission] = true;
+			// }
+
+			// JP - changed foreach due to OG v2.0
+			// JP - line added to debug
+			//echo "\$response: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($response, TRUE))))."\n<br />\n";
+			foreach( $response as $permission) { //permission => $exists ) {
+				if($permission['status'] == 'granted'){
+					$permissions[$permission['permission']] = true;
+				}
 			}
+			//echo "\$permissions: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($permissions, TRUE))))."\n<br />\n";
 			return $permissions;
 		}
 

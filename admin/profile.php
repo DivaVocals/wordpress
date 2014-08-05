@@ -123,7 +123,9 @@ class Facebook_User_Profile {
 					$permission_labels[] = '<a href="https://www.facebook.com/about/privacy/your-info#public-info">' . esc_html( __( 'Public profile information', 'facebook' ) ) . '</a>';
 				if ( isset( $permissions['publish_actions'] ) )
 					$permission_labels[] = esc_html( __( 'Publish to Timeline', 'facebook' ) );
-				if ( isset( $permissions['manage_pages'] ) && isset( $permissions['publish_stream'] ) )
+				//if ( isset( $permissions['manage_pages'] ) && isset( $permissions['publish_stream'] ) )
+				// JP - changed for v2.0
+				if ( isset( $permissions['manage_pages'] ) && isset( $permissions['publish_actions'] ) )
 					$permission_labels[] = '<a href="https://developers.facebook.com/docs/reference/login/page-permissions/">' . esc_html( __( 'Manage your pages on your behalf (including creating content)', 'facebook' ) ) . '</a>';
 				$section .= '<tr><th scope="row">' . esc_html( __( 'Permissions', 'facebook' ) ) . '</th><td>';
 				if ( empty( $permissions ) ) {
@@ -189,7 +191,9 @@ class Facebook_User_Profile {
 				require_once( dirname( dirname(__FILE__) ) . '/facebook-user.php' );
 
 			try {
-				$facebook_user = Facebook_User::get_facebook_user( $_POST['facebook_fbid'], array( 'fields' => array( 'id', 'username', 'link', 'third_party_id' ) ) );
+				//$facebook_user = Facebook_User::get_facebook_user( $_POST['facebook_fbid'], array( 'fields' => array( 'id', 'username', 'link', 'third_party_id' ) ) );
+				// JP - changed line due to 'username' error
+				$facebook_user = Facebook_User::get_facebook_user( $_POST['facebook_fbid'], array( 'fields' => array( 'id', 'link', 'third_party_id' ) ) );
 				if ( isset( $facebook_user['id'] ) ) {
 					$facebook_user_data = array(
 						'fb_uid' => $facebook_user['id'],
@@ -206,7 +210,12 @@ class Facebook_User_Profile {
 					unset( $facebook_user_data );
 				}
 				unset( $facebook_user );
-			} catch(Exception $e) {}
+			} catch(Exception $e) {
+				/*
+				JP - Added to catch exception
+				*/
+				echo "\$e: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($e, TRUE))))."\n<br />\n";
+			}
 		}
 
 		if ( isset( $_POST[ 'facebook_timeline' ] ) && $_POST[ 'facebook_timeline' ] == '1' ) {

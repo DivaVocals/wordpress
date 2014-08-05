@@ -434,6 +434,10 @@ class Facebook_Social_Publisher_Settings {
 	public static function update_publish_to_page( $page_data ) {
 		global $facebook_loader;
 
+		// JP added for debug
+		echo "\$page_data: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($page_data, TRUE))))."\n<br />\n";
+		echo "\$facebook_loader: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($facebook_loader, TRUE))))."\n<br />\n";
+
 		if ( ! ( is_array( $page_data ) && ! empty( $page_data ) && isset( $page_data['id'] ) ) )
 			return;
 

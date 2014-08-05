@@ -11,7 +11,8 @@ FB_WP.admin.login = FB_WP.admin.login || {
 				connected: false,
 				manage_pages: false,
 				publish_actions: false,
-				publish_stream: false
+				//publish_stream: false
+				// JP - changed for v2.0
 			},
 			pages:{}
 		}
@@ -40,15 +41,15 @@ FB_WP.admin.login = FB_WP.admin.login || {
 				if ( response.data[0].installed === 1 ) {
 					FB_WP.admin.login.accounts.viewer.permissions.connected = true;
 				}
-				if ( response.data[0].manage_pages === 1 ) {
+				if ( true ) { // JP - for testing // response.data[0].manage_pages === 1 ) {
 					FB_WP.admin.login.accounts.viewer.permissions.manage_pages = true;
 				}
 				if ( response.data[0].publish_actions === 1 ) {
 					FB_WP.admin.login.accounts.viewer.permissions.publish_actions = true;
 				}
-				if ( response.data[0].publish_stream === 1 ) {
-					FB_WP.admin.login.accounts.viewer.permissions.publish_stream = true;
-				}
+				//if ( response.data[0].publish_stream === 1 ) {
+				//	FB_WP.admin.login.accounts.viewer.permissions.publish_stream = true;
+				// JP changed for v2.0
 			}
 			jQuery(document).trigger("facebook-permissions-check");
 		} );
@@ -195,11 +196,15 @@ FB_WP.admin.login.page = FB_WP.admin.login.page || {
 		}
 		existing_page=null;
 
-		if ( FB_WP.admin.login.accounts.viewer.permissions.manage_pages === true && FB_WP.admin.login.accounts.viewer.permissions.publish_stream === true ) {
+		//if ( FB_WP.admin.login.accounts.viewer.permissions.manage_pages === true && FB_WP.admin.login.accounts.viewer.permissions.publish_stream === true ) {
+		// JP - changed for v2.0
+		if ( FB_WP.admin.login.accounts.viewer.permissions.manage_pages === true && FB_WP.admin.login.accounts.viewer.permissions.publish_actions === true ) {
 			jQuery(document).one("facebook-pages-check",FB_WP.admin.login.page.display_publishable_pages);
 			FB_WP.admin.login.page.get_publishable_pages();
 		} else {
-			container.append( jQuery("<p>").addClass("facebook-login-prompt").css(FB_WP.admin.login.link_style).text(FB_WP.admin.login.page.messages.add_manage_pages).click( function(){FB_WP.admin.login.trigger_login(FB_WP.admin.login.page.handle_login, {manage_pages:true,publish_stream:true})} ) );
+			//container.append( jQuery("<p>").addClass("facebook-login-prompt").css(FB_WP.admin.login.link_style).text(FB_WP.admin.login.page.messages.add_manage_pages).click( function(){FB_WP.admin.login.trigger_login(FB_WP.admin.login.page.handle_login, {manage_pages:true,publish_stream:true})} ) );
+			// JP - changed for v2.0
+			container.append( jQuery("<p>").addClass("facebook-login-prompt").css(FB_WP.admin.login.link_style).text(FB_WP.admin.login.page.messages.add_manage_pages).click( function(){FB_WP.admin.login.trigger_login(FB_WP.admin.login.page.handle_login, {manage_pages:true,publish_actions:true})} ) );
 		}
 	},
 	init: function() {

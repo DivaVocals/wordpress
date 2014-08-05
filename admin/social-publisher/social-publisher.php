@@ -302,6 +302,8 @@ class Facebook_Social_Publisher {
 			return;
 
 		$facebook_page = self::get_publish_page();
+		// JP - added for debug
+		echo "\$facebook_page: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($facebook_page, TRUE))))."\n<br />\n";
 		if ( ! $facebook_page )
 			$facebook_page = get_option( 'facebook_publish_page' );
 		if ( ! ( is_array( $facebook_page ) && ! empty( $facebook_page['access_token'] ) && ! empty( $facebook_page['id'] ) && isset( $facebook_page['name'] ) ) )
