@@ -194,6 +194,8 @@ class Facebook_User_Profile {
 				//$facebook_user = Facebook_User::get_facebook_user( $_POST['facebook_fbid'], array( 'fields' => array( 'id', 'username', 'link', 'third_party_id' ) ) );
 				// JP - changed line due to 'username' error
 				$facebook_user = Facebook_User::get_facebook_user( $_POST['facebook_fbid'], array( 'fields' => array( 'id', 'link', 'third_party_id' ) ) );
+				echo "\$_POST: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($_POST, TRUE))))."\n<br />\n";
+				echo "\$facebook_user: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($facebook_user, TRUE))))."\n<br />\n";
 				if ( isset( $facebook_user['id'] ) ) {
 					$facebook_user_data = array(
 						'fb_uid' => $facebook_user['id'],

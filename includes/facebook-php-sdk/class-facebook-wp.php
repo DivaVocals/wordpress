@@ -186,7 +186,10 @@ class Facebook_WP_Extend extends WP_Facebook {
 		$params['access_token'] = $facebook_loader->credentials['access_token'];
 		if ( isset( $facebook_loader->credentials['appsecret_proof'] ) )
 			$params['appsecret_proof'] = $facebook_loader->credentials['appsecret_proof'];
-
+		// JP - added for debug
+		//echo "\$path: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($path, TRUE))))."\n<br />\n";
+		//echo "\$method: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($method, TRUE))))."\n<br />\n";
+		//echo "\$params: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($params, TRUE))))."\n<br />\n";
 		return self::graph_api( $path, $method, $params );
 	}
 

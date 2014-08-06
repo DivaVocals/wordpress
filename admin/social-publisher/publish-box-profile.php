@@ -172,7 +172,7 @@ class Facebook_Social_Publisher_Meta_Box_Profile {
 			return;
 
 		if ( ! class_exists( 'Facebook_Social_Publisher' ) )
-			require_once( dirname(__FILE__) . '/social_publisher.php' );
+			require_once( dirname(__FILE__) . '/social-publisher.php' ); // JP - Changed social_publisher.php to social-publisher.php
 		$capability_singular_base = Facebook_Social_Publisher::post_type_capability_base( $post_type );
 
 		if ( ! current_user_can( 'edit_' . $capability_singular_base, $post_id ) )
