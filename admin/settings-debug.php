@@ -154,7 +154,11 @@ class Facebook_Settings_Debugger {
 				}
 
 				$facebook_user_permissions = Facebook_WP_Extend::get_permissions_by_facebook_user_id( $user->fb_data['fb_uid'] );
+				// JP - added to debug
+				echo "\$facebook_user_permissions: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($facebook_user_permissions, TRUE))))."\n<br />\n";
 				if ( ! is_array( $facebook_user_permissions ) || ! isset( $facebook_user_permissions['installed'] ) ) {
+				//JP - changed line for OG v2.0
+				//if ( ! is_array( $facebook_user_permissions ) || $facebook_user_permissions['status'] != TRUE ) {	
 					$users['wp'][] = $user;
 					continue;
 				}
@@ -165,7 +169,8 @@ class Facebook_Settings_Debugger {
 		}
 
 		$users['fb'] = $users_with_app_permissions;
-
+		// JP - added to debug
+		echo "\$users: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($users, TRUE))))."\n<br />\n";
 		return $users;
 	}
 
@@ -440,12 +445,16 @@ class Facebook_Settings_Debugger {
 		global $wpdb;
 
 		$users = self::get_all_wordpress_facebook_users();
+		// JP - added line to debug
+		echo "\$users: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($users, TRUE))))."\n<br />\n";
 
 		// should only happen if errors
 		if ( empty( $users['fb'] ) && empty( $users['wp'] ) )
 			return;
 
 		echo '<section id="debug-users"><header><h3>' . esc_html( __( 'Authors' ) ) . '</h3></header>';
+		// JP - added line to debug
+		echo "\$users: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($users, TRUE))))."\n<br />\n";
 
 		if ( ! empty( $users['fb'] ) ) {
 			if ( ! class_exists( 'Facebook_User' ) )
@@ -470,7 +479,9 @@ class Facebook_Settings_Debugger {
 				echo '</td>';
 
 				echo '<td>';
-				if ( isset( $user->fb_data['permissions']['manage_pages'] ) && $user->fb_data['permissions']['manage_pages'] && isset( $user->fb_data['permissions']['publish_stream'] ) && $user->fb_data['permissions']['publish_stream'] )
+				//if ( isset( $user->fb_data['permissions']['manage_pages'] ) && $user->fb_data['permissions']['manage_pages'] && isset( $user->fb_data['permissions']['publish_stream'] ) && $user->fb_data['permissions']['publish_stream'] )
+				// JP -   changed line for OG v2.0
+				if ( isset( $user->fb_data['permissions']['manage_pages'] ) && $user->fb_data['permissions']['manage_pages'] && isset( $user->fb_data['permissions']['publish_actions'] ) && $user->fb_data['permissions']['publish_actions'] )
 					echo self::EXISTS;
 				else
 					echo self::DOES_NOT_EXIST;

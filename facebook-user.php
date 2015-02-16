@@ -201,9 +201,12 @@ class Facebook_User {
 			} else {
 				$authors['wp'][] = $user;
 			}
+			// JP  - added line to debug
+			echo "\$facebook_user_data: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($facebook_user_data, TRUE))))."\n<br />\n";
 			unset( $facebook_user_data );
 		}
-
+		// JP  - added line to debug
+		echo "\$authors: ". __FILE__ .':'. __LINE__ ."\n<br />\n". nl2br(preg_replace("/ /U", "&nbsp;", htmlspecialchars(print_r($authors, TRUE))))."\n<br />\n";
 		return $authors;
 	}
 
